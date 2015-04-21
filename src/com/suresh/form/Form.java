@@ -55,22 +55,9 @@ public class Form extends Activity {
         Log.i("check",String.valueOf(session.checkLogin()));
         if(!session.checkLogin())
         {
-        	if(!new GPSTracker(getApplicationContext()).haveNetworkConnection())
+        	if(!new GPSTracker(Form.this).haveNetworkConnection())
         	{
-				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				builder.setMessage(R.string.internet_connectivity_message)
-				.setTitle(R.string.internet_connectivity_header);
-				builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.cancel();
-						finish();
-					}
-				});
-				AlertDialog dialog = builder.create();
-				dialog.show();	
-
+        		new GPSTracker(Form.this).openNetworkConnectionDialog();
         	}
         	else
         	{

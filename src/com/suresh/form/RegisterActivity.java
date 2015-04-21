@@ -26,6 +26,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.suresh.extras.GPSTracker;
 import com.suresh.network.StringReceiver;
 
 @SuppressLint("NewApi")
@@ -133,7 +134,11 @@ public class RegisterActivity extends Activity {
 					e.printStackTrace();
 				}
 				data=obj2.toString();
-				postData();				
+				if(new GPSTracker(RegisterActivity.this).haveNetworkConnection())
+					postData();
+				else {
+					new GPSTracker(RegisterActivity.this).openNetworkConnectionDialog();
+				}
 
 			}
 			}

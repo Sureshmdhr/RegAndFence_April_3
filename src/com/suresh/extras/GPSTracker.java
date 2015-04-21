@@ -209,6 +209,39 @@ public class GPSTracker extends Service implements LocationListener {
         return null;
     }
 
+	public void openNetworkConnectionDialog() 
+	{
+	    AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+	    alertDialog.setTitle("No Internet Enabled");
+	    alertDialog.setMessage("Do you want to go to settings menu?");
+	    alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+	    {
+	        public void onClick(DialogInterface dialog, int which) 
+	        {
+	        	dialog.cancel();
+	        }
+	    });
+
+	    alertDialog.setPositiveButton("Wi-Fi", new DialogInterface.OnClickListener() {
+	        public void onClick(DialogInterface dialog,int which) {
+	            Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
+	            startActivity(intent);
+	        }
+	    });
+	    
+	    alertDialog.setNeutralButton("Mobile Data", new DialogInterface.OnClickListener() {
+	        public void onClick(DialogInterface dialog,int which) {
+	        	Intent intent = new Intent();
+	        	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	        	intent.setAction(android.provider.Settings.ACTION_DATA_ROAMING_SETTINGS);
+	            startActivity(intent);
+	        }
+	    });
+	    
+	    alertDialog.show();
+	}
+	
+
   public boolean haveNetworkConnection() 
   {
 	    boolean haveConnectedWifi = false;

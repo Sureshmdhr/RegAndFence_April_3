@@ -147,7 +147,7 @@ public class geofences extends BaseActivity implements OnItemLongClickListener{
 		else
 		{
 			mydata=null;
-			toaster("No Internet Connection");
+			new GPSTracker(geofences.this).openNetworkConnectionDialog();
 		}
 
         mv=(MapView)findViewById(R.id.map);
