@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -55,9 +56,11 @@ public class Form extends Activity {
         Log.i("check",String.valueOf(session.checkLogin()));
         if(!session.checkLogin())
         {
+    		openNetworkConnectionDialog();
+
         	if(!new GPSTracker(Form.this).haveNetworkConnection())
         	{
-        		new GPSTracker(Form.this).openNetworkConnectionDialog();
+        		openNetworkConnectionDialog();
         	}
         	else
         	{
@@ -281,4 +284,37 @@ public class Form extends Activity {
 	alertDialog.show();	                	
 
 	}
+	
+	public void openNetworkConnectionDialog() 
+	{
+	    AlertDialog.Builder alertDialog = new AlertDialog.Builder(Form.this);
+	    alertDialog.setTitle("No Internet Enabled");
+	    alertDialog.setMessage("Do you want to go to settings menu?");
+	    alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+	    {
+	        public void onClick(DialogInterface dialog, int which) 
+	        {
+	        	dialog.cancel();
+	        }
+	    });
+
+	    alertDialog.setPositiveButton("Wi-Fi", new DialogInterface.OnClickListener() {
+	        public void onClick(DialogInterface dialog,int which) {
+	            Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
+	            startActivity(intent);
+	        }
+	    });
+	    
+	    alertDialog.setNeutralButton("Mobile Data", new DialogInterface.OnClickListener() {
+	        public void onClick(DialogInterface dialog,int which) {
+	        	Intent intent = new Intent();
+	        	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	        	intent.setAction(android.provider.Settings.ACTION_DATA_ROAMING_SETTINGS);
+	            startActivity(intent);
+	        }
+	    });
+	    
+	    alertDialog.show();
+	}
+
 }

@@ -62,6 +62,7 @@ import com.suresh.extras.GPSTracker;
 import com.suresh.extras.SessionManager;
 import com.suresh.extras.Utils;
 import com.suresh.form.R;
+import com.suresh.form.RegisterActivity;
 import com.suresh.menus.BaseActivity;
 import com.suresh.routing.GHAsyncTask;
 import com.suresh.routing.POI;
@@ -147,7 +148,7 @@ public class geofences extends BaseActivity implements OnItemLongClickListener{
 		else
 		{
 			mydata=null;
-			new GPSTracker(geofences.this).openNetworkConnectionDialog();
+			toaster("No Internet Connection");
 		}
 
         mv=(MapView)findViewById(R.id.map);
